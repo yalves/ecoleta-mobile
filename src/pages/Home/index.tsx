@@ -1,10 +1,11 @@
 import React from 'react';
-import { AppLoading } from 'expo';
-import { RectButton } from 'react-native-gesture-handler';
-import { Feather as Icon } from '@expo/vector-icons'
-import { View, ImageBackground, Image, StyleSheet, Text } from 'react-native';
 import { Roboto_400Regular, Roboto_500Medium} from '@expo-google-fonts/roboto'
 import { Ubuntu_700Bold, useFonts } from '@expo-google-fonts/ubuntu'
+import { AppLoading } from 'expo';
+import { RectButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native'
+import { Feather as Icon } from '@expo/vector-icons'
+import { View, ImageBackground, Image, StyleSheet, Text } from 'react-native';
 
 
 const Home = () => {
@@ -16,6 +17,12 @@ const Home = () => {
 
     if (!fontsLoaded) {
         <AppLoading />
+    }
+
+    const navigation = useNavigation();
+
+    function handleNavigateToPoints() {
+        navigation.navigate('Points');
     }
 
     return (
@@ -30,7 +37,7 @@ const Home = () => {
                 <Text style={styles.description}>Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente</Text>
             </View>
             <View style={styles.footer}>
-                <RectButton style={styles.button} onPress={() => {}}>
+                <RectButton style={styles.button} onPress={handleNavigateToPoints}>
                     <View style={styles.buttonIcon}>
                         <Text>
                             <Icon name="arrow-right" color="#FFF" />
@@ -49,7 +56,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 32,
-      backgroundColor: '#f0f0f5'
     },
   
     main: {
