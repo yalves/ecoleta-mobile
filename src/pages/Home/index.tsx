@@ -40,7 +40,7 @@ const Home = () => {
                 <RectButton style={styles.button} onPress={handleNavigateToPoints}>
                     <View style={styles.buttonIcon}>
                         <Text>
-                            <Icon name="arrow-right" color="#FFF" />
+                            <Icon name="arrow-right" size={20} color="#FFF" />
                         </Text>
                     </View>
                     <Text style={styles.buttonText}>
