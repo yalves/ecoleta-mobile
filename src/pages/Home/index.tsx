@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Roboto_400Regular, Roboto_500Medium} from '@expo-google-fonts/roboto'
 import { Ubuntu_700Bold, useFonts } from '@expo-google-fonts/ubuntu'
 import { AppLoading } from 'expo';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons'
-import { View, ImageBackground, Image, StyleSheet, Text } from 'react-native';
+import { View, ImageBackground, Image, StyleSheet, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+
 
 
 const Home = () => {
@@ -21,34 +23,57 @@ const Home = () => {
 
     const navigation = useNavigation();
 
+    const [uf, setUF] = useState('');
+    const [city, setCity] = useState('');
+
     function handleNavigateToPoints() {
-        navigation.navigate('Points');
+        navigation.navigate('Points', {uf, city});
     }
 
     return (
-        <ImageBackground 
-            source={require('../../assets/home-background.png')} 
-            style={styles.container}
-            imageStyle={{ width:274, height: 368}}
-        >
-            <View style={styles.main} >
-                <Image source={require('../../assets/logo.png')}/>
-                <Text style={styles.title}>Seu marketplace de coleta de resíduos</Text>
-                <Text style={styles.description}>Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente</Text>
-            </View>
-            <View style={styles.footer}>
-                <RectButton style={styles.button} onPress={handleNavigateToPoints}>
-                    <View style={styles.buttonIcon}>
-                        <Text>
-                            <Icon name="arrow-right" size={20} color="#FFF" />
-                        </Text>
+        <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>        
+            <ImageBackground 
+                source={require('../../assets/home-background.png')} 
+                style={styles.container}
+                imageStyle={{ width:274, height: 368}}
+            >
+                <View style={styles.main} >
+                    <Image source={require('../../assets/logo.png')}/>
+                    <View>
+                        <Text style={styles.title}>Seu marketplace de coleta de resíduos</Text>
+                        <Text style={styles.description}>Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente</Text>
                     </View>
-                    <Text style={styles.buttonText}>
-                        Entrar
-                    </Text>
-                </RectButton>
-            </View>
-        </ImageBackground>
+                </View>
+                <View style={styles.footer}>
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder="Digite a UF" 
+                        value={uf} 
+                        onChangeText={setUF}
+                        autoCapitalize="characters"
+                        autoCorrect={false}
+                        maxLength={2}
+                    />
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder="Digite a cidade" 
+                        value={city} 
+                        onChangeText={setCity}
+                        autoCorrect={false}
+                    />
+                    <RectButton style={styles.button} onPress={handleNavigateToPoints}>
+                        <View style={styles.buttonIcon}>
+                            <Text>
+                                <Icon name="arrow-right" size={20} color="#FFF" />
+                            </Text>
+                        </View>
+                        <Text style={styles.buttonText}>
+                            Entrar
+                        </Text>
+                    </RectButton>
+                </View>
+            </ImageBackground>
+        </KeyboardAvoidingView>
     )
 };
 
